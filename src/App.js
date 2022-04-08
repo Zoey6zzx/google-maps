@@ -2,13 +2,12 @@ import 'bootstrap/dist/js/bootstrap';
 import logo from './logo.svg';
 import './App.css';
 
-
-import {Map} from './components/map/Map';
+import Map from './components/map/Map';
 
 function App() {
   return (
-    <div className="App">
-      <Map />
+    <div className="container">
+        <Map />
     </div>
   );
 }
