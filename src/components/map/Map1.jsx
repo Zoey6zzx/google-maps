@@ -2,16 +2,6 @@ import React from "react";
 import BingMapsReact from "bingmaps-react";
 import Pin from "../../models/Pin";
 
-const pinNapoli = {
-    center: {
-      latitude: 40.8517746,
-      longitude: 14.2681244,
-    },
-    options: {
-      title: "Pizzaland",
-    },
-}
-
 const pinFirenze = {
     center: {
       latitude: 43.7695604,
@@ -32,23 +22,30 @@ const pinMilano = {
     },
 }
 
-const pushPins = [pinNapoli, pinFirenze, pinMilano];
+const pinNapoli = {
+    center: {
+      latitude: 40.8517746,
+      longitude: 14.2681244,
+    },
+    options: {
+      title: "Pizzaland",
+    },
+}
+
+const pushPins = [pinFirenze, pinMilano, pinNapoli];
 
 
-export default class Map extends React.Component {
+export default class Map1 extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            pushPin : []
+            latitude: 41.29246,
+            longitude: 12.5736108,
+            title: 'Italy',
         };
 
-        this.center = {
-            latitude: 0,
-            longitude: 0
-        }
-
-        this.options = ''
+        this.pin = {pushPins: []}
     }
 
     handleChange = (e) => {
@@ -59,8 +56,8 @@ export default class Map extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        let array = [...this.state.pushPin];
-        let pin = new Pin({...this.center}, {options:this.title})
+        let array = [...this.pin.pushPins]
+        let pin = new Pin(this.state.latitude, this.state.longitude, this.state.title)
 
         array.push(pin)
     };
@@ -78,7 +75,7 @@ export default class Map extends React.Component {
                         showBreadcrumb: true,
                     }}
                     viewOptions={{
-                        center: { latitude: this.center.latitude, longitude: this.center.longitude},
+                        center: { latitude: this.state.latitude, longitude: this.state.longitude},
                         zoom: 5,
                         mapTypeId: "grayscale",
                     }}
@@ -88,15 +85,15 @@ export default class Map extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <div>
                             <label htmlFor="latitude" className="form-label">Latitude</label>
-                            <input className="form-control" type="number" name="latitude" value={this.center.latitude} onChange={this.handleChange} />
+                            <input className="form-control" type="number" name="latitude" value={this.state.latitude} onChange={this.handleChange} />
                         </div>
                         <div>
                             <label htmlFor="longitude" className="form-label">Longitude</label>
-                            <input className="form-control" type="number" name="longitude" value={this.center.longitude} onChange={this.handleChange} />
+                            <input className="form-control" type="number" name="longitude" value={this.state.longitude} onChange={this.handleChange} />
                         </div>
                         <div>
                             <label htmlFor="title" className="form-label">Title</label>
-                            <input className="form-control" type="text" name="title" value={this.title} onChange={this.handleChange} />
+                            <input className="form-control" type="text" name="title" value={this.state.title} onChange={this.handleChange} />
                         </div>
                         <div>
                             <button className="btn btn-success">Search</button>
